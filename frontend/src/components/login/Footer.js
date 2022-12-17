@@ -1,7 +1,6 @@
-import React from "react";
 import { Link } from "react-router-dom";
 
-const Footer = () => {
+export default function Footer() {
   return (
     <footer className="login_footer">
       <div className="login_footer_wrap">
@@ -61,6 +60,4 @@ const Footer = () => {
       </div>
     </footer>
   );
-};
-
-export default Footer;
+}
