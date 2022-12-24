@@ -119,7 +119,8 @@ exports.login = async (req, res) => {
     res.status(201).send({
       id: user._id,
       username: user.username,
-      picture: user.picture,
+      picture:
+        "https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQhnpy6MRkS1q8Rznh0wSWF91qDVhGuHV3tSA&usqp=CAU",
       first_name: user.first_name,
       last_name: user.last_name,
       token,
