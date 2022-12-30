@@ -8,6 +8,13 @@ export const userReducer = (
     case "LOGIN": {
       return action.payload;
     }
+    case "VERIFY":
+      return {
+        ...state,
+        verified: action.payload,
+      };
+    case "LOGOUT":
+      return null;
     default: {
       return state;
     }

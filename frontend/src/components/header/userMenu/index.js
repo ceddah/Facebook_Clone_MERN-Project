@@ -1,13 +1,23 @@
 import React, { useState } from "react";
-import { Link } from "react-router-dom";
+import { Link, useNavigate } from "react-router-dom";
 import SettingsPrivacy from "./SettingsPrivacy";
 import HelpAndSupport from "./HelpAndSupport";
 import DisplayAndAccessibility from "./DisplayAndAccessibility";
+import { useDispatch } from "react-redux";
+import Cookies from "js-cookie";
 
 const UserMenu = ({ user }) => {
   const [visible, setVisible] = useState(0);
-
+  const dispatch = useDispatch();
+  const navigate = useNavigate();
   const returnToMainUserMenu = () => setVisible(0);
+  const logout = () => {
+    Cookies.set("user", "");
+    dispatch({
+      type: "LOGOUT",
+    });
+    navigate("/login");
+  };
   return (
     <div className="mmenu">
       {visible === 0 && (
@@ -59,7 +69,7 @@ const UserMenu = ({ user }) => {
               <i className="right_icon" />
             </div>
           </div>
-          <div className="mmenu_item hover3">
+          <div className="mmenu_item hover3" onClick={() => logout()}>
             <div className="small_circle">
               <i className="logout_filled_icon" />
             </div>
