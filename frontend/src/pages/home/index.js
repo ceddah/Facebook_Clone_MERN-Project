@@ -4,7 +4,7 @@ import CreatePost from "../../components/createPost";
 import Header from "../../components/header";
 import LeftHome from "../../components/home/left";
 import RightHome from "../../components/home/right";
-import SendVerification from "../../components/home/sendVerification";
+import SendVerification from "../../components/home/emailVerification";
 import Stories from "../../components/home/stories";
 
 import "./style.css";

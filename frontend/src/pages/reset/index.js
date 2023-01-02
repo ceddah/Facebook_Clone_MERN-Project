@@ -2,20 +2,23 @@ import Cookies from "js-cookie";
 import React, { useState } from "react";
 import { useDispatch, useSelector } from "react-redux";
 import { Link, useNavigate } from "react-router-dom";
-import { Form, Formik } from "formik";
-import LoginInput from "../../components/inputs/loginInput";
 import SearchAccount from "./SearchAccount";
 import "./style.css";
 import SendEmail from "./SendEmail";
 import CodeVerification from "./CodeVerification";
 import Footer from "../../components/login/Footer";
+import ChangePassword from "./ChangePassword";
 
 const Reset = () => {
   const user = useSelector((state) => state.user);
   const [email, setEmail] = useState("");
   const [code, setCode] = useState("");
   const [error, setError] = useState("");
-  const [visible, setVisible] = useState(2);
+  const [password, setPassword] = useState("");
+  const [confirmPassword, setConfirmPassword] = useState("");
+  const [loading, setLoading] = useState(false);
+  const [visible, setVisible] = useState(0);
+  const [userInfos, setUserInfos] = useState("");
   const dispatch = useDispatch();
   const navigate = useNavigate();
   const logout = () => {
@@ -25,6 +28,7 @@ const Reset = () => {
     });
     navigate("/login");
   };
+
   return (
     <div className="reset">
       <div className="reset_header">
@@ -45,9 +49,52 @@ const Reset = () => {
         )}
       </div>
       <div className="reset_wrap">
-        {visible === 0 && <SearchAccount email={email} setEmail={setEmail} error={error} />}
-        {visible === 1 && <SendEmail user={user} />}
-        {visible === 2 && <CodeVerification code={code} setCode={setCode} error={error} />}
+        {visible === 0 && (
+          <SearchAccount
+            email={email}
+            setEmail={setEmail}
+            error={error}
+            setLoading={setLoading}
+            setError={setError}
+            setUserInfos={setUserInfos}
+            setVisible={setVisible}
+          />
+        )}
+        {visible === 1 && userInfos && (
+          <SendEmail
+            user={user}
+            setVisible={setVisible}
+            userInfos={userInfos}
+            setError={setError}
+            setLoading={setLoading}
+            email={email}
+            error={error}
+          />
+        )}
+        {visible === 2 && (
+          <CodeVerification
+            code={code}
+            setCode={setCode}
+            error={error}
+            setError={setError}
+            setVisible={setVisible}
+            setLoading={setLoading}
+            userInfos={userInfos}
+          />
+        )}
+        {visible === 3 && (
+          <ChangePassword
+            password={password}
+            confirmPassword={confirmPassword}
+            setPassword={setPassword}
+            setConfirmPassword={setConfirmPassword}
+            error={error}
+            setError={setError}
+            userInfos={userInfos}
+            loading={loading}
+            setLoading={setLoading}
+          />
+        )}
       </div>
       <Footer />
     </div>
