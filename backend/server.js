@@ -1,6 +1,7 @@
 const express = require("express");
 const cors = require("cors");
 const mongoose = require("mongoose");
+const fileUpload = require("express-fileupload");
 const { readdirSync } = require("fs");
 require("dotenv").config({});
 const app = express();
@@ -11,6 +12,11 @@ app.use(
   cors({
     origin: "http://localhost:3000",
     optionSuccessStatus: 200,
+  })
+);
+app.use(
+  fileUpload({
+    useTempFiles: true,
   })
 );
 
