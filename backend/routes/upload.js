@@ -2,8 +2,8 @@ const express = require("express");
 const router = express.Router();
 const { uploadImages } = require("../controllers/upload");
 const { authUser } = require("../middleware/auth");
-const imageUpload = require("../middleware/imageUpload");
+const imageUploadCheck = require("../middleware/imageUpload");
 
-router.post("/uploadImages", imageUpload, uploadImages);
+router.post("/uploadImages", authUser, imageUploadCheck, uploadImages);
 
 module.exports = router;
