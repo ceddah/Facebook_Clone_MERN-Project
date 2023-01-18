@@ -1,5 +1,5 @@
 .home {
-  min-height: 100vh;
+  /* min-height: 100vh; */
   background: var(--bg-secondary);
   display: grid;
   grid-template-columns: repeat(3, 1fr);
@@ -13,6 +13,7 @@
 @media (max-width: 1175px) {
   .stories,
   .createPost,
+  .post,
   .send_verification {
     width: 84%;
   }
@@ -58,12 +59,14 @@
   }
   .stories,
   .createPost,
+  .post,
   .send_verification {
     width: 100%;
   }
 }
 @media (max-width: 960px) {
   .createPost,
+  .post,
   .send_verification {
     width: 93%;
   }
@@ -92,11 +95,12 @@
     display: none;
   }
   .createPost,
+  .post,
   .send_verification {
     width: 110%;
   }
   .stories {
-    width: 113%;
+    width: 112%;
   }
   .home_middle {
     margin-left: 9%;
@@ -104,7 +108,7 @@
 }
 @media (max-width: 805px) {
   .stories {
-    grid-template-columns: repeat(6, 13vw);
+    grid-template-columns: repeat(6, 12.7vw);
   }
   .story_profile_name,
   .story_create_text {
@@ -123,6 +127,9 @@
   .left_home::-webkit-scrollbar {
     display: none;
   }
+  .popup {
+    width: 70vw !important;
+  }
 }
 @media (max-width: 620px) {
   .left_home {
@@ -134,6 +141,7 @@
   }
   .stories,
   .createPost,
+  .post,
   .send_verification {
     width: 100%;
   }
@@ -157,3 +165,31 @@
     width: 20px;
   }
 }
+/*-----Activate popup----*/
+.popup {
+  position: relative;
+  background: var(--bg-primary);
+  box-shadow: 0 1px 2px var(--shadow-1);
+  width: 40vw;
+  height: 200px;
+  position: fixed;
+  top: 40%;
+  left: 50%;
+  transform: translate(-50%, -50%);
+  z-index: 99;
+  text-align: center;
+  border-radius: 10px;
+}
+.popup_header {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  font-weight: 600;
+  border-bottom: 1px solid var(--bg-third);
+  padding: 15px;
+}
+.popup_message {
+  padding: 15px;
+  font-weight: 500;
+}
+/*-----Activate popup----*/

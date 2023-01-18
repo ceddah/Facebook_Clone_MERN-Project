@@ -10,3 +10,16 @@ exports.createPost = async (req, res) => {
     });
   }
 };
+
+exports.getAllPosts = async (req, res) => {
+  try {
+    const posts = await Post.find()
+      .populate("user", "first_name last_name picture username gender")
+      .sort({ createdAt: "desc" });
+    res.status(200).json(posts);
+  } catch (error) {
+    return res.status(500).json({
+      message: error.message,
+    });
+  }
+};
