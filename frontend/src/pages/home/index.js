@@ -10,18 +10,20 @@ import Stories from "../../components/home/stories";
 import "./style.css";
 import Post from "../../components/post";
 
-const Home = ({ setCreatePostVisible, posts }) => {
+const Home = ({ setCreatePostVisible, posts, getAllPosts }) => {
   const user = useSelector((state) => state.user);
   const [height, setHeight] = useState();
   const middle = useRef(null);
+
   useEffect(() => {
     setHeight(middle.current.clientHeight);
+    getAllPosts();
   }, []);
 
   const onImageLoad = () => setHeight(middle.current.clientHeight);
   return (
-    <div className="home" style={{ height: `${height + 150}px` }}>
-      <Header />
+    <div className="home" style={{ height: `${height + 150}px`, minHeight: "70vw" }}>
+      <Header page="home" />
       <LeftHome user={user} />
       <div className="home_middle" ref={middle}>
         <Stories />

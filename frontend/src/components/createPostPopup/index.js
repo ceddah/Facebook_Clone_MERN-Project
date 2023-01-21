@@ -38,7 +38,7 @@ const CreatePostPopup = ({ user, setCreatePostVisible }) => {
       const imagesBlob = images.map((img) => {
         return dataUriToBlob(img);
       });
-      const path = `${user.username}/post Images`;
+      const path = `${user.username}/post_images`;
       let formData = new FormData();
       formData.append("path", path);
       imagesBlob.forEach((img) => {

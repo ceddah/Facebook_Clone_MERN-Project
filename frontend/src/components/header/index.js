@@ -13,6 +13,7 @@ import {
   Search,
   Watch,
   Messenger,
+  Home,
 } from "../../svg";
 import "./style.css";
 import SearchMenu from "./SearchMenu";
@@ -20,7 +21,7 @@ import AllMenu from "./AllMenu";
 import useClickOutside from "../../helpers/clickOutside";
 import UserMenu from "./userMenu";
 
-const Header = () => {
+const Header = ({ page }) => {
   const user = useSelector((state) => state.user);
   const [showAllMenu, setShowAllMenu] = useState(false);
   const [showUserMenu, setShowUserMenu] = useState(false);
@@ -51,8 +52,8 @@ const Header = () => {
         <SearchMenu closeSearchMenu={() => setShowSearchMenu(false)} color={color} />
       )}
       <div className="header_middle">
-        <Link to="/" className="middle_icon active">
-          <HomeActive color={color} />
+        <Link to="/" className={`middle_icon ${page === "home" ? "active" : "hover1"}`}>
+          {page === "home" ? <HomeActive /> : <Home color={color} />}
         </Link>
         <Link to="/" className="middle_icon hover1">
           <Friends color={color} />
@@ -69,7 +70,10 @@ const Header = () => {
         </Link>
       </div>
       <div className="header_right">
-        <Link to="/profile" className="profile_link hover1">
+        <Link
+          to="/profile"
+          className={`profile_link hover1 ${page === "profile" ? "active_link" : ""}`}
+        >
           <img src={user?.picture} alt={user.first_name} />
           <span>{user?.first_name}</span>
         </Link>

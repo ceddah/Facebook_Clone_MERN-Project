@@ -8,14 +8,14 @@ import CreateComment from "./CreateComment";
 import PostMenu from "./PostMenu";
 import useClickOutside from "../../helpers/clickOutside";
 
-const Post = ({ post, onImageLoad, user }) => {
+const Post = ({ post, onImageLoad, user, isOnProfile }) => {
   const [visible, setVisible] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const menuRef = useRef(null);
   useClickOutside(menuRef, () => setShowMenu(false));
 
   return (
-    <div className="post">
+    <div className="post" style={{ width: `${isOnProfile && "100%"}` }}>
       <div className="post_header">
         <Link className="post_header_left" to={`/profile/${post.user.username}`}>
           <img src={post.user.picture} alt={post.user.first_name} />
