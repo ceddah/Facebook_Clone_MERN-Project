@@ -1,15 +1,19 @@
-import React, { useState } from "react";
+import React, { useRef, useState } from "react";
 import ProfilePicture from "../../components/profilePicture";
 
-const ProfilePictureInfos = ({ profile, visitor }) => {
-  const [showUpdatePicture, setShowUpdatePicture] = useState(true);
+const ProfilePictureInfos = ({ profile, visitor, photos }) => {
+  const [showUpdatePicture, setShowUpdatePicture] = useState(false);
+  const pRef = useRef(null);
   return (
     <div className="profile_img_wrap">
-      {showUpdatePicture && <ProfilePicture setShowUpdatePicture={setShowUpdatePicture} />}
+      {showUpdatePicture && (
+        <ProfilePicture setShowUpdatePicture={setShowUpdatePicture} pRef={pRef} photos={photos} />
+      )}
       <div className="profile_w_left">
         <div className="profile_w_img">
           <div
             className="profile_w_bg"
+            ref={pRef}
             style={{
               backgroundSize: "cover",
               backgroundImage: `url(${profile?.picture})`,

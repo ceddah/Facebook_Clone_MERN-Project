@@ -135,6 +135,7 @@ exports.login = async (req, res) => {
       last_name: user.last_name,
       token,
       verified: user.verified,
+      gender: user.gender,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
@@ -234,8 +235,47 @@ exports.getProfile = async (req, res) => {
     if (!profile) {
       return res.status(400).json({ ok: false });
     }
-    const posts = await Post.find({ user: profile._id }).populate("user");
+    const posts = await Post.find({ user: profile._id }).populate("user").sort({ createdAt: -1 });
     res.status(200).json({ ...profile.toObject(), posts });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+exports.updateProfilePicture = async (req, res) => {
+  try {
+    const { url } = req.body;
+    await User.findByIdAndUpdate(req.user.id, {
+      picture: url,
+    });
+    res.status(201).json({ url });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+exports.updateCover = async (req, res) => {
+  try {
+    const { url } = req.body;
+    await User.findByIdAndUpdate(req.user.id, {
+      cover: url,
+    });
+    res.status(201).json({ url });
+  } catch (error) {
+    res.status(500).json({ message: error.message });
+  }
+};
+exports.updateDetails = async (req, res) => {
+  try {
+    const { infos } = req.body;
+    const updated = await User.findByIdAndUpdate(
+      req.user.id,
+      {
+        details: infos,
+      },
+      {
+        new: true,
+      }
+    );
+    res.status(201).json(updated.details);
   } catch (error) {
     res.status(500).json({ message: error.message });
   }

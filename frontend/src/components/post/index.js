@@ -24,9 +24,9 @@ const Post = ({ post, onImageLoad, user, isOnProfile }) => {
               {post.user.first_name} {post.user.last_name}
               <div className="updated_p">
                 {post.type === "profilePicture" &&
-                  `updated ${post.user.gender === "male" ? "his" : "her"} profile picture`}
-                {post.type === "cover" &&
-                  `updated ${post.user.gender === "male" ? "his" : "her"} cover picture`}
+                  `updated ${post.user.gender === "Male" ? "his" : "her"} profile picture`}
+                {post.type === "coverPicture" &&
+                  `updated ${post.user.gender === "Male" ? "his" : "her"} cover picture`}
               </div>
             </div>
             <div className="post_profile_privacy_date">
@@ -46,7 +46,7 @@ const Post = ({ post, onImageLoad, user, isOnProfile }) => {
         <div className="post_bg" style={{ backgroundImage: `url(${post.background})` }}>
           <div className="post_bg_text">{post.text}</div>
         </div>
-      ) : (
+      ) : post.type === null ? (
         <>
           <div className="post_text">{post.text}</div>
           {post.images && post.images.length && (
@@ -78,6 +78,17 @@ const Post = ({ post, onImageLoad, user, isOnProfile }) => {
             </div>
           )}
         </>
+      ) : post.type === "profilePicture" ? (
+        <div className="post_profile_wrap">
+          <div className="post_updated_bg">
+            {post.user?.cover && <img src={post.user?.cover} alt="" />}
+          </div>
+          <img src={post.images[0].url} alt="profile pic" className="post_updated_picture" />
+        </div>
+      ) : (
+        <div className="post_cover_wrap">
+          <img src={post.images[0].url} alt="cover" />
+        </div>
       )}
       <div className="post_infos">
         <div className="reacts_count">

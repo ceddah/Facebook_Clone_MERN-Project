@@ -65,6 +65,14 @@ export function profileReducer(state, action) {
         profile: action.payload,
         error: "",
       };
+    case "REHYDRATE_DETAILS":
+      return {
+        ...state,
+        profile: {
+          ...state.profile,
+          details: action.payload,
+        },
+      };
     case "PROFILE_ERROR":
       return {
         ...state,

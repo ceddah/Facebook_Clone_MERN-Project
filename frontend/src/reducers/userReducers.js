@@ -8,6 +8,11 @@ export const userReducer = (
     case "LOGIN": {
       return action.payload;
     }
+    case "UPDATED_PICTURE":
+      return {
+        ...state,
+        picture: action.payload,
+      };
     case "VERIFY":
       return {
         ...state,
