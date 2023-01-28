@@ -1,6 +1,7 @@
 import axios from "axios";
-import React, { useState } from "react";
+import React, { useEffect, useState } from "react";
 import Bio from "./Bio";
+import EditDetails from "./EditDetails";
 import "./style.css";
 
 const Intro = ({ details, visitor, user, rehydrateDetails }) => {
@@ -16,14 +17,26 @@ const Intro = ({ details, visitor, user, rehydrateDetails }) => {
     relationship: details?.relationship ? details.relationship : "",
     instagram: details?.instagram ? details.instagram : "",
   };
-  const [infos, setInfos] = useState(initial);
+  const [infos, setInfos] = useState({
+    bio: details?.bio ? details.bio : "",
+    otherName: details?.otherName ? details.otherName : "",
+    job: details?.job ? details.job : "",
+    workplace: details?.workplace ? details.workplace : "",
+    highSchool: details?.highSchool ? details.highSchool : "",
+    college: details?.college ? details.college : "",
+    currentCity: details?.currentCity ? details.currentCity : "",
+    hometown: details?.hometown ? details.hometown : "",
+    relationship: details?.relationship ? details.relationship : "",
+    instagram: details?.instagram ? details.instagram : "",
+  });
   const [showBio, setShowBio] = useState(false);
+  const [showEditDetails, setShowEditDetails] = useState(false);
   const [charactersRemaining, setCharactersRemaining] = useState(100 - infos?.bio.length || 100);
   const handleBioChange = (e) => {
-    setInfos((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    // setInfos((prev) => ({ ...prev, [e.target.name]: e.target.value }));
+    setInfos({ ...details, [e.target.name]: e.target.value });
     setCharactersRemaining(100 - Number(e.target.value.length));
   };
-
   const updateDetails = async () => {
     try {
       const { data } = await axios.put(
@@ -61,13 +74,16 @@ const Intro = ({ details, visitor, user, rehydrateDetails }) => {
           Add Bio
         </button>
       )}
+
       {showBio && (
         <Bio
-          infos={infos}
+          value={infos}
           handleBioChange={handleBioChange}
           charactersRemaining={charactersRemaining}
           setShowBio={setShowBio}
           updateDetails={updateDetails}
+          placeholder="Add bio"
+          name="bio"
         />
       )}
       {details?.job && details?.workplace ? (
@@ -131,7 +147,20 @@ const Intro = ({ details, visitor, user, rehydrateDetails }) => {
           </a>
         </div>
       )}
-      {!visitor && <button className="gray_btn hover1 w100">Edit Details</button>}
+      {!visitor && (
+        <button onClick={() => setShowEditDetails(true)} className="gray_btn hover1 w100">
+          Edit Details
+        </button>
+      )}
+      {showEditDetails && !visitor && (
+        <EditDetails
+          setShowEditDetails={setShowEditDetails}
+          details={details}
+          handleBioChange={handleBioChange}
+          updateDetails={updateDetails}
+          infos={infos}
+        />
+      )}
       {!visitor && <button className="gray_btn hover1 w100">Add Hobbies</button>}
       {!visitor && <button className="gray_btn hover1 w100">Add Featured</button>}
     </div>

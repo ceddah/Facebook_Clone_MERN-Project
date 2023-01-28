@@ -28,7 +28,7 @@ const ProfilePictureInfos = ({ profile, visitor, photos }) => {
         <div className="profile_w_col">
           <div className="profile_name">
             {profile?.first_name} {profile?.last_name}
-            <div className="othername">(Othername)</div>
+            <div className="othername">({profile?.details?.otherName})</div>
           </div>
           <div className="profile_friend_count"></div>
           <div className="profile_friend_imgs"></div>

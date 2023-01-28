@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer, useRef, useState } from "react";
 import { Link, useNavigate, useParams } from "react-router-dom";
 import { useSelector } from "react-redux";
 import { profileReducer } from "../../functions/reducers";
@@ -15,6 +15,7 @@ import Post from "../../components/post";
 import Photos from "./Photos";
 import Friends from "./Friends";
 import Intro from "../../components/intro";
+import { useMediaQuery } from "react-responsive";
 
 const Profile = ({ setCreatePostVisible }) => {
   const [{ loading, error, profile }, dispatch] = useReducer(profileReducer, {
@@ -23,6 +24,11 @@ const Profile = ({ setCreatePostVisible }) => {
     error: "",
   });
   const [photos, setPhotos] = useState({});
+  const [heights, setHeights] = useState({
+    profileTopHeight: null,
+    leftSideHeight: null,
+    scrollHeight: null,
+  });
   const user = useSelector((state) => state.user);
   const { username } = useParams();
   const userName = username === undefined ? user.username : username;
@@ -31,6 +37,11 @@ const Profile = ({ setCreatePostVisible }) => {
   const path = `${userName}/*`;
   const max = 30;
   const sort = "desc";
+  const profileTopRef = useRef(null);
+  const leftSideRef = useRef(null);
+  const check = useMediaQuery({
+    query: "(min-width:901px)",
+  });
   const getProfileData = async () => {
     try {
       dispatch({
@@ -84,13 +95,29 @@ const Profile = ({ setCreatePostVisible }) => {
       payload: newDetails,
     });
   };
+  const getScrollHeight = () => {
+    setHeights((prev) => ({ ...prev, scrollHeight: window.pageYOffset }));
+  };
   useEffect(() => {
     getProfileData();
   }, [userName]);
+  useEffect(() => {
+    setHeights((prev) => ({
+      ...prev,
+      profileTopHeight: profileTopRef.current.clientHeight + 300,
+      leftSideHeight: leftSideRef.current.clientHeight,
+    }));
+    window.addEventListener("scroll", getScrollHeight, {
+      passive: true,
+    });
+
+    return () => window.removeEventListener("scroll", getScrollHeight, { passive: true });
+  }, [loading]);
+  console.log(heights);
   return (
     <div className="profile">
       <Header page="profile" />
-      <div className="profile_top">
+      <div className="profile_top" ref={profileTopRef}>
         <div className="profile_container">
           <Cover cover={profile.cover} visitor={visitor} photos={photos.resources} />
           <ProfilePictureInfos profile={profile} visitor={visitor} photos={photos.resources} />
@@ -101,8 +128,19 @@ const Profile = ({ setCreatePostVisible }) => {
         <div className="profile_container">
           <div className="bottom_container">
             <PeopleYouMayKnow />
-            <div className="profile_grid">
-              <div className="profile_left">
+            <div
+              className={`profile_grid ${
+                check &&
+                heights.scrollHeight >= heights.profileTopHeight &&
+                heights.leftSideHeight > 1000
+                  ? "scrollFixed showLess"
+                  : check &&
+                    heights.scrollHeight >= heights.profileTopHeight &&
+                    heights.leftSideHeight < 1000 &&
+                    "scrollFixed showMore"
+              }`}
+            >
+              <div className="profile_left" ref={leftSideRef}>
                 <Intro
                   details={profile.details}
                   visitor={visitor}

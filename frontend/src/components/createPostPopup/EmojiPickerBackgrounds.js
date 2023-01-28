@@ -1,5 +1,6 @@
 import React, { useEffect, useRef, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
+import { useMediaQuery } from "react-responsive";
 
 const postBackgrounds = [
   "../../../images/postbackgrounds/1.jpg",
@@ -19,6 +20,9 @@ const EmojiPickerBackgrounds = ({ text, setText, user, type2, background, setBac
   const [showbackgrounds, setShowbackgrounds] = useState(false);
   const textRef = useRef(null);
   const bgRef = useRef(null);
+  const sm = useMediaQuery({
+    query: "(max-width: 550)",
+  });
 
   const handleEmoji = (_, { emoji }) => {
     const ref = textRef.current;
@@ -55,7 +59,7 @@ const EmojiPickerBackgrounds = ({ text, setText, user, type2, background, setBac
           }}
           onChange={(e) => setText(e.target.value)}
           placeholder={`What's on your mind ${user?.first_name}?`}
-          className={`post_input ${type2 ? "input2" : ""}`}
+          className={`post_input ${type2 ? "input2" : ""} ${sm && !background && "l0"}`}
         ></textarea>
       </div>
       <div className={`${!type2 ? "post_emojis_wrap" : ""}`}>
