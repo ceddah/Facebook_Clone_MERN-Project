@@ -3,7 +3,7 @@ const JWT = require("jsonwebtoken");
 exports.authUser = async (req, res, next) => {
   try {
     let tmp = req.headers["authorization"];
-    const token = tmp.split(" ")[1];
+    const token = tmp?.split(" ")[1];
     if (!token) {
       return res.status(400).json({
         message: "Invalid Authentication.",

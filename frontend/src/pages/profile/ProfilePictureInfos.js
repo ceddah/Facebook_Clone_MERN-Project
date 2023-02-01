@@ -1,5 +1,7 @@
 import React, { useRef, useState } from "react";
+import { Link } from "react-router-dom";
 import ProfilePicture from "../../components/profilePicture";
+import Friendship from "./Friendship";
 
 const ProfilePictureInfos = ({ profile, visitor, photos }) => {
   const [showUpdatePicture, setShowUpdatePicture] = useState(false);
@@ -28,10 +30,33 @@ const ProfilePictureInfos = ({ profile, visitor, photos }) => {
         <div className="profile_w_col">
           <div className="profile_name">
             {profile?.first_name} {profile?.last_name}
-            <div className="othername">({profile?.details?.otherName})</div>
+            {profile?.details?.otherName && (
+              <div className="othername">({profile.details.otherName})</div>
+            )}
           </div>
-          <div className="profile_friend_count"></div>
-          <div className="profile_friend_imgs"></div>
+          {profile?.friends && (
+            <>
+              <div className="profile_friend_count">
+                {profile?.friends?.length === 0
+                  ? null
+                  : profile?.friends?.length === 1
+                  ? "1 Friend"
+                  : `${profile?.friends?.length} Friends`}
+              </div>
+              <div className="profile_friend_imgs">
+                {profile?.friends &&
+                  profile.friends.slice(0, 6).map((friend, i) => (
+                    <Link to={`/profile/${friend.username}`} key={friend.username}>
+                      <img
+                        style={{ transform: `translateX(${i * -6}px)`, zIndex: i }}
+                        src={friend.picture}
+                        alt={friend.username}
+                      />
+                    </Link>
+                  ))}
+              </div>
+            </>
+          )}
         </div>
       </div>
       {!visitor ? (
@@ -45,7 +70,9 @@ const ProfilePictureInfos = ({ profile, visitor, photos }) => {
             <span>Edit profile</span>
           </div>
         </div>
-      ) : null}
+      ) : (
+        <Friendship friendship={profile?.friendship} profileId={profile?._id} />
+      )}
     </div>
   );
 };

@@ -88,7 +88,6 @@ const Profile = ({ setCreatePostVisible }) => {
       });
     }
   };
-
   const rehydrateDetails = (newDetails) => {
     dispatch({
       type: "REHYDRATE_DETAILS",
@@ -113,7 +112,6 @@ const Profile = ({ setCreatePostVisible }) => {
 
     return () => window.removeEventListener("scroll", getScrollHeight, { passive: true });
   }, [loading]);
-  console.log(heights);
   return (
     <div className="profile">
       <Header page="profile" />
