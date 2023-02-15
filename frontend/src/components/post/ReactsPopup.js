@@ -26,7 +26,7 @@ const reactsArray = [
     image: "../../../reacts/angry.gif",
   },
 ];
-const ReactsPopup = ({ visible, setVisible }) => {
+const ReactsPopup = ({ visible, setVisible, reactionHandler }) => {
   return visible ? (
     <div
       className="reacts_popup"
@@ -38,7 +38,7 @@ const ReactsPopup = ({ visible, setVisible }) => {
       }}
     >
       {reactsArray.map((react, i) => (
-        <div key={i} className="react">
+        <div key={i} className="react" onClick={() => reactionHandler(react.name)}>
           <img src={react.image} alt="reaction" />
         </div>
       ))}
