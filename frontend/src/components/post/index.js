@@ -8,12 +8,15 @@ import CreateComment from "./CreateComment";
 import PostMenu from "./PostMenu";
 import useClickOutside from "../../helpers/clickOutside";
 import { getReacts, reactPost } from "../../functions/post";
+import Comment from "./Comment";
 
 const Post = ({ post, onImageLoad, user, isOnProfile }) => {
   const [visible, setVisible] = useState(false);
   const [showMenu, setShowMenu] = useState(false);
   const [reacts, setReacts] = useState();
   const [check, setCheck] = useState();
+  const [comments, setComments] = useState([]);
+  const [count, setCount] = useState(1);
   const [totalReacts, setTotalReacts] = useState(0);
   const menuRef = useRef(null);
   useClickOutside(menuRef, () => setShowMenu(false));
@@ -48,8 +51,13 @@ const Post = ({ post, onImageLoad, user, isOnProfile }) => {
     }
   };
 
+  const showMore = () => {
+    setCount((prev) => prev + 3);
+  };
+
   useEffect(() => {
     getPostReacts();
+    setComments(post?.comments);
   }, [post]);
   return (
     <div className="post" style={{ width: `${isOnProfile && "100%"}` }}>
@@ -148,7 +156,7 @@ const Post = ({ post, onImageLoad, user, isOnProfile }) => {
           <div className="react_count_num">{totalReacts > 0 && totalReacts}</div>
         </div>
         <div className="to_right">
-          <div className="comments_count">13 comments</div>
+          <div className="comments_count">{comments.length} comments</div>
           <div className="share_count">1 share</div>
         </div>
       </div>
@@ -206,7 +214,24 @@ const Post = ({ post, onImageLoad, user, isOnProfile }) => {
       </div>
       <div className="comments_wrap">
         <div className="comments_order"></div>
-        <CreateComment user={user} />
+        <CreateComment
+          user={user}
+          postId={post._id}
+          setComments={setComments}
+          setCount={setCount}
+        />
+        {comments &&
+          comments
+            .slice(0, count)
+            .sort((a, b) => {
+              return new Date(b.commentAt) - new Date(a.commentAt);
+            })
+            .map((comment) => <Comment comment={comment} key={comment.commentAt.toString()} />)}
+        {count < comments.length && (
+          <div onClick={() => showMore()} className="view_comments">
+            View more comments
+          </div>
+        )}
       </div>
       {showMenu && (
         <PostMenu

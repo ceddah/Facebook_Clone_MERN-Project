@@ -1,11 +1,16 @@
 import React, { useEffect, useRef, useState } from "react";
 import EmojiPicker from "emoji-picker-react";
+import { comment } from "../../functions/post";
+import { uploadImages } from "../../functions/uploadImages";
+import dataURItoBlob from "../../helpers/dataUriToBlob";
+import { ClipLoader } from "react-spinners";
 
-const CreateComment = ({ user }) => {
+const CreateComment = ({ user, postId, setComments, setCount }) => {
   const [picker, setPicker] = useState(false);
   const [cursorPosition, setCursorPosition] = useState();
   const [commentImage, setCommentImage] = useState("");
   const [error, setError] = useState("");
+  const [loading, setLoading] = useState(false);
   const textRef = useRef(null);
   const [text, setText] = useState("");
   const fileInputRef = useRef(null);
@@ -39,6 +44,34 @@ const CreateComment = ({ user }) => {
     reader.onload = (e) => {
       setCommentImage(e.target.result);
     };
+  };
+
+  const handleComment = async (e) => {
+    if (e.key === "Enter") {
+      if (commentImage !== "") {
+        setLoading(true);
+        const imageBlob = dataURItoBlob(commentImage);
+        const path = `${user.username}/post_images/${postId}`;
+        let formData = new FormData();
+        formData.append("path", path);
+        formData.append("file", imageBlob);
+        const imgComment = await uploadImages(formData, user.token);
+        const { comments } = await comment(postId, text, imgComment[0].url, user.token);
+        setComments(comments);
+        setCount((prev) => ++prev);
+        setLoading(false);
+        setText("");
+        setCommentImage("");
+      } else {
+        setLoading(true);
+        const { comments } = await comment(postId, text, "", user.token);
+        setComments(comments);
+        setCount((prev) => ++prev);
+        setLoading(false);
+        setText("");
+        setCommentImage("");
+      }
+    }
   };
   useEffect(() => {
     textRef.current.selectionEnd = cursorPosition;
@@ -75,7 +108,11 @@ const CreateComment = ({ user }) => {
             value={text}
             placeholder="Write your comment here"
             onChange={({ target }) => setText(target.value)}
+            onKeyUp={handleComment}
           />
+          <div className="comment_circle" style={{ marginTop: "5px" }}>
+            <ClipLoader size={20} color="#1876F2" loading={loading} />
+          </div>
           <div className="comment_circle_icon hover2" onClick={() => setPicker((c) => !c)}>
             <i className="emoji_icon"></i>
           </div>
