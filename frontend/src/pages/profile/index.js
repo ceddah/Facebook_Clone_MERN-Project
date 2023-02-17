@@ -17,7 +17,7 @@ import Friends from "./Friends";
 import Intro from "../../components/intro";
 import { useMediaQuery } from "react-responsive";
 
-const Profile = ({ setCreatePostVisible }) => {
+const Profile = ({ getAllPosts }) => {
   const [{ loading, error, profile }, dispatch] = useReducer(profileReducer, {
     loading: false,
     profile: [],
@@ -114,7 +114,7 @@ const Profile = ({ setCreatePostVisible }) => {
   }, [loading]);
   return (
     <div className="profile">
-      <Header page="profile" />
+      <Header page="profile" getAllPosts={getAllPosts} />
       <div className="profile_top" ref={profileTopRef}>
         <div className="profile_container">
           <Cover cover={profile.cover} visitor={visitor} photos={photos.resources} />
@@ -165,9 +165,6 @@ const Profile = ({ setCreatePostVisible }) => {
                 </div>
               </div>
               <div className="profile_right">
-                {!visitor && (
-                  <CreatePost user={user} setCreatePostVisible={setCreatePostVisible} isOnProfile />
-                )}
                 <GridPosts />
                 <div className="posts">
                   {profile.posts && profile.posts.length ? (

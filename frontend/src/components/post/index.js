@@ -15,16 +15,19 @@ const Post = ({ post, onImageLoad, user, isOnProfile }) => {
   const [showMenu, setShowMenu] = useState(false);
   const [reacts, setReacts] = useState();
   const [check, setCheck] = useState();
+  const [checkSaved, setCheckSaved] = useState();
   const [comments, setComments] = useState([]);
   const [count, setCount] = useState(1);
   const [totalReacts, setTotalReacts] = useState(0);
   const menuRef = useRef(null);
+  const postRef = useRef(null);
   useClickOutside(menuRef, () => setShowMenu(false));
   const getPostReacts = async () => {
     const res = await getReacts(post._id, user.token);
     setReacts(res.reacts);
     setCheck(res.check);
     setTotalReacts(res.total);
+    setCheckSaved(res.checkSaved);
   };
 
   const reactionHandler = async (type) => {
@@ -60,7 +63,7 @@ const Post = ({ post, onImageLoad, user, isOnProfile }) => {
     setComments(post?.comments);
   }, [post]);
   return (
-    <div className="post" style={{ width: `${isOnProfile && "100%"}` }}>
+    <div className="post" style={{ width: `${isOnProfile && "100%"}` }} ref={postRef}>
       <div className="post_header">
         <Link className="post_header_left" to={`/profile/${post.user.username}`}>
           <img src={post.user.picture} alt={post.user.first_name} />
@@ -239,6 +242,12 @@ const Post = ({ post, onImageLoad, user, isOnProfile }) => {
           userId={user?.id}
           postUserId={post?.user?._id}
           imagesLength={post?.images?.length}
+          postId={post._id}
+          token={user.token}
+          checkSaved={checkSaved}
+          setCheckSaved={setCheckSaved}
+          images={post?.images}
+          postRef={postRef}
         />
       )}
     </div>

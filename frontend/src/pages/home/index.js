@@ -23,7 +23,7 @@ const Home = ({ setCreatePostVisible, posts, getAllPosts }) => {
   const onImageLoad = () => setHeight(middle.current.clientHeight);
   return (
     <div className="home" style={{ height: `${height + 150}px`, minHeight: "70vw" }}>
-      <Header page="home" />
+      <Header page="home" getAllPosts={getAllPosts} />
       <LeftHome user={user} />
       <div className="home_middle" ref={middle}>
         <Stories />

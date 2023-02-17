@@ -10,7 +10,7 @@ import PostError from "./PostError";
 import dataUriToBlob from "../../helpers/dataUriToBlob";
 import { uploadImages } from "../../functions/uploadImages";
 
-const CreatePostPopup = ({ user, setCreatePostVisible }) => {
+const CreatePostPopup = ({ user, setCreatePostVisible, addNewPostToState }) => {
   const [text, setText] = useState("");
   const [images, setImages] = useState([]);
   const [showPreview, setShowPreview] = useState(false);
@@ -26,7 +26,8 @@ const CreatePostPopup = ({ user, setCreatePostVisible }) => {
       setLoading(true);
       const response = await createPost(null, background, text, null, user.id, user.token);
       setLoading(false);
-      if (response === "ok") {
+      if (response.post) {
+        addNewPostToState(response.post);
         setBackground("");
         setText("");
         setCreatePostVisible(false);
@@ -45,20 +46,22 @@ const CreatePostPopup = ({ user, setCreatePostVisible }) => {
         formData.append("file", img);
       });
       const response = await uploadImages(formData, user.token);
-      const res = await createPost(null, null, text, response, user.id, user.token);
+      const postResponse = await createPost(null, null, text, response, user.id, user.token);
       setLoading(false);
-      if (res === "ok") {
+      if (postResponse.post) {
+        addNewPostToState(postResponse.post);
         setText("");
         setImages([]);
         setCreatePostVisible(false);
       } else {
-        setError(res);
+        setError(postResponse);
       }
     } else if (text) {
       setLoading(true);
       const response = await createPost(null, null, text, null, user.id, user.token);
       setLoading(false);
-      if (response === "ok") {
+      if (response.post) {
+        addNewPostToState(response.post);
         setBackground("");
         setText("");
         setCreatePostVisible(false);

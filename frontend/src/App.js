@@ -30,7 +30,7 @@ function App() {
       });
       dispatch({
         type: "POSTS_SUCCESS",
-        payload: data,
+        payload: data.allPosts,
       });
     } catch (error) {
       dispatch({
@@ -38,6 +38,12 @@ function App() {
         payload: error?.response?.data?.message,
       });
     }
+  };
+  const addNewPostToState = (newPost) => {
+    dispatch({
+      type: "POSTS_ADD_NEW_POST",
+      payload: newPost,
+    });
   };
   const user = useSelector((state) => state.user);
   const [createPostVisible, setCreatePostVisible] = useState(false);
@@ -47,7 +53,11 @@ function App() {
   return (
     <div>
       {createPostVisible && (
-        <CreatePostPopup setCreatePostVisible={setCreatePostVisible} user={user} />
+        <CreatePostPopup
+          setCreatePostVisible={setCreatePostVisible}
+          user={user}
+          addNewPostToState={addNewPostToState}
+        />
       )}
       <Routes>
         <Route element={<NotLoggedInRoutes />}>
@@ -65,14 +75,8 @@ function App() {
             }
           />
           <Route path="/activate/:token" element={<Activate />} />
-          <Route
-            path="/profile"
-            element={<Profile setCreatePostVisible={setCreatePostVisible} />}
-          />
-          <Route
-            path="/profile/:username"
-            element={<Profile setCreatePostVisible={setCreatePostVisible} />}
-          />
+          <Route path="/profile" element={<Profile getAllPosts={getAllPosts} />} />
+          <Route path="/profile/:username" element={<Profile getAllPosts={getAllPosts} />} />
         </Route>
         <Route path="/reset" element={<Reset />} />
       </Routes>

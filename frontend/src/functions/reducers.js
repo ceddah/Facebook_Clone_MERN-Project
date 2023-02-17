@@ -13,6 +13,13 @@ export function postsReducer(state, action) {
         posts: action.payload,
         error: "",
       };
+    case "POSTS_ADD_NEW_POST":
+      const newPosts = state.posts;
+      newPosts.unshift(action.payload);
+      return {
+        ...state,
+        posts: newPosts,
+      };
     case "POSTS_ERROR":
       return {
         ...state,
