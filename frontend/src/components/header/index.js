@@ -49,7 +49,11 @@ const Header = ({ page, getAllPosts }) => {
         </div>
       </div>
       {showSearchMenu && (
-        <SearchMenu closeSearchMenu={() => setShowSearchMenu(false)} color={color} />
+        <SearchMenu
+          closeSearchMenu={() => setShowSearchMenu(false)}
+          color={color}
+          token={user.token}
+        />
       )}
       <div className="header_middle">
         <Link
