@@ -9,7 +9,6 @@ import Cover from "./Cover";
 import ProfilePictureInfos from "./ProfilePictureInfos";
 import ProfileMenu from "./ProfileMenu";
 import PeopleYouMayKnow from "./PeopleYouMayKnow";
-import CreatePost from "../../components/createPost";
 import GridPosts from "./GridPosts";
 import Post from "../../components/post";
 import Photos from "./Photos";
@@ -29,6 +28,7 @@ const Profile = ({ getAllPosts }) => {
     leftSideHeight: null,
     scrollHeight: null,
   });
+  const [othername, setOthername] = useState();
   const user = useSelector((state) => state.user);
   const { username } = useParams();
   const userName = username === undefined ? user.username : username;
@@ -101,6 +101,10 @@ const Profile = ({ getAllPosts }) => {
     getProfileData();
   }, [userName]);
   useEffect(() => {
+    setOthername(profile?.details?.otherName);
+  }, [profile]);
+
+  useEffect(() => {
     setHeights((prev) => ({
       ...prev,
       profileTopHeight: profileTopRef.current.clientHeight + 300,
@@ -117,8 +121,13 @@ const Profile = ({ getAllPosts }) => {
       <Header page="profile" getAllPosts={getAllPosts} />
       <div className="profile_top" ref={profileTopRef}>
         <div className="profile_container">
-          <Cover cover={profile.cover} visitor={visitor} photos={photos.resources} />
-          <ProfilePictureInfos profile={profile} visitor={visitor} photos={photos.resources} />
+          <Cover cover={profile?.cover} visitor={visitor} photos={photos?.resources} />
+          <ProfilePictureInfos
+            profile={profile}
+            visitor={visitor}
+            photos={photos?.resources}
+            othername={othername}
+          />
           <ProfileMenu />
         </div>
       </div>
@@ -168,7 +177,7 @@ const Profile = ({ getAllPosts }) => {
                 <GridPosts />
                 <div className="posts">
                   {profile.posts && profile.posts.length ? (
-                    profile?.posts.map((post) => (
+                    profile.posts.map((post) => (
                       <Post isOnProfile key={post._id} post={post} user={user} />
                     ))
                   ) : (

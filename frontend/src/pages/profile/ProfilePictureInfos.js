@@ -3,7 +3,7 @@ import { Link } from "react-router-dom";
 import ProfilePicture from "../../components/profilePicture";
 import Friendship from "./Friendship";
 
-const ProfilePictureInfos = ({ profile, visitor, photos }) => {
+const ProfilePictureInfos = ({ profile, visitor, photos, othername }) => {
   const [showUpdatePicture, setShowUpdatePicture] = useState(false);
   const pRef = useRef(null);
   return (
@@ -30,9 +30,7 @@ const ProfilePictureInfos = ({ profile, visitor, photos }) => {
         <div className="profile_w_col">
           <div className="profile_name">
             {profile?.first_name} {profile?.last_name}
-            {profile?.details?.otherName && (
-              <div className="othername">({profile.details.otherName})</div>
-            )}
+            {othername && <div className="othername">({othername})</div>}
           </div>
           {profile?.friends && (
             <>

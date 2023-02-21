@@ -11,6 +11,7 @@ import { useSelector } from "react-redux";
 import { useEffect, useReducer, useState } from "react";
 import axios from "axios";
 import { postsReducer } from "./functions/reducers";
+import Friends from "./pages/friends";
 
 function App() {
   const [{ loading, error, posts }, dispatch] = useReducer(postsReducer, {
@@ -76,6 +77,8 @@ function App() {
           />
           <Route path="/activate/:token" element={<Activate />} />
           <Route path="/profile" element={<Profile getAllPosts={getAllPosts} />} />
+          <Route path="/friends" element={<Friends />} />
+          <Route path="/friends/:type" element={<Friends />} />
           <Route path="/profile/:username" element={<Profile getAllPosts={getAllPosts} />} />
         </Route>
         <Route path="/reset" element={<Reset />} />

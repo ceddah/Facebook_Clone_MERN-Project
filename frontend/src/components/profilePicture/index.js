@@ -72,8 +72,8 @@ const ProfilePicture = ({ setShowUpdatePicture, pRef, photos }) => {
           <h4>Your profile pictures</h4>
           <div className="old_pictures">
             {photos
-              .filter((img) => img.folder === `${user.username}/profile_picture`)
-              .map((photo) => (
+              ?.filter((img) => img.folder === `${user.username}/profile_picture`)
+              ?.map((photo) => (
                 <img
                   src={photo.secure_url}
                   key={photo.public_id}
@@ -85,8 +85,8 @@ const ProfilePicture = ({ setShowUpdatePicture, pRef, photos }) => {
           <h4>Other pictures</h4>
           <div className="old_pictures">
             {photos
-              .filter((img) => img.folder !== `${user.username}/profile_picture`)
-              .map((photo) => (
+              ?.filter((img) => img.folder !== `${user.username}/profile_picture`)
+              ?.map((photo) => (
                 <img
                   src={photo.secure_url}
                   key={photo.public_id}
