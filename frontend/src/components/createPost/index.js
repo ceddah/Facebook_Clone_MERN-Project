@@ -28,7 +28,7 @@ const CreatePost = ({ user, setCreatePostVisible, isOnProfile }) => {
           </div>
         ) : (
           <div className="createPost_icon hover1">
-            <Feeling color="#F7P928" />
+            <Feeling color="#f7b928" />
             Feeling/Activity
           </div>
         )}

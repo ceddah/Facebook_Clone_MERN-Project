@@ -8,7 +8,7 @@ import Activate from "./pages/home/activate";
 import Reset from "./pages/reset";
 import CreatePostPopup from "./components/createPostPopup";
 import { useSelector } from "react-redux";
-import { useEffect, useReducer, useState } from "react";
+import { useReducer, useState } from "react";
 import axios from "axios";
 import { postsReducer } from "./functions/reducers";
 import Friends from "./pages/friends";
@@ -19,6 +19,7 @@ function App() {
     posts: [],
     error: "",
   });
+  const dark = useSelector((state) => state.dark);
   const getAllPosts = async () => {
     try {
       dispatch({
@@ -48,11 +49,9 @@ function App() {
   };
   const user = useSelector((state) => state.user);
   const [createPostVisible, setCreatePostVisible] = useState(false);
-  // useEffect(() => {
-  //   getAllPosts();
-  // }, []);
+
   return (
-    <div>
+    <div className={dark ? "dark" : ""}>
       {createPostVisible && (
         <CreatePostPopup
           setCreatePostVisible={setCreatePostVisible}

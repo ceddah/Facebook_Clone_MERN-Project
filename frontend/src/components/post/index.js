@@ -160,7 +160,7 @@ const Post = ({ post, onImageLoad, user, isOnProfile }) => {
         </div>
         <div className="to_right">
           <div className="comments_count">{comments.length} comments</div>
-          <div className="share_count">1 share</div>
+          <div className="share_count">0 share</div>
         </div>
       </div>
       <div className="post_actions">

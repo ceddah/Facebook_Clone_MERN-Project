@@ -1,6 +1,20 @@
 import React from "react";
+import { useSelector, useDispatch } from "react-redux";
 
 const DisplayAndAccessibility = ({ returnToMainUserMenu }) => {
+  const dark = useSelector((state) => state.dark);
+  const dispatch = useDispatch();
+  const handleDarkModeChange = (isDark) => {
+    if (isDark) {
+      dispatch({
+        type: "DARK",
+      });
+    } else {
+      dispatch({
+        type: "LIGHT",
+      });
+    }
+  };
   return (
     <div className="absolute_wrap">
       <div className="absolute_wrap_header">
@@ -22,11 +36,23 @@ const DisplayAndAccessibility = ({ returnToMainUserMenu }) => {
       </div>
       <label htmlFor="darkOff" className="hover1">
         <span>Off</span>
-        <input type="radio" name="dark" id="darkOff" />
+        <input
+          type="radio"
+          name="dark"
+          id="darkOff"
+          checked={!dark && true}
+          onChange={() => handleDarkModeChange(false)}
+        />
       </label>
       <label htmlFor="darkOn" className="hover1">
         <span>On</span>
-        <input type="radio" name="dark" id="darkOn" />
+        <input
+          type="radio"
+          name="dark"
+          id="darkOn"
+          checked={dark && true}
+          onChange={() => handleDarkModeChange(true)}
+        />
       </label>
 
       <div className="mmenu_main">
