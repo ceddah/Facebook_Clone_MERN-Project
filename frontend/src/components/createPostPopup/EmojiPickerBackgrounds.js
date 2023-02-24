@@ -3,16 +3,28 @@ import EmojiPicker from "emoji-picker-react";
 import { useMediaQuery } from "react-responsive";
 
 const postBackgrounds = [
-  "/images/postbackgrounds/1.jpg",
-  "/images/postbackgrounds/2.jpg",
-  "/images/postbackgrounds/3.jpg",
-  "/images/postbackgrounds/4.jpg",
-  "/images/postbackgrounds/5.jpg",
-  "/images/postbackgrounds/6.jpg",
-  "/images/postbackgrounds/7.jpg",
-  "/images/postbackgrounds/8.jpg",
-  "/images/postbackgrounds/9.jpg",
+  "https://res.cloudinary.com/dqs5qo3ts/image/upload/v1677271624/bgImages/1_hi9xjg.jpg",
+  "https://res.cloudinary.com/dqs5qo3ts/image/upload/v1677271623/bgImages/2_shcwh8.jpg",
+  "https://res.cloudinary.com/dqs5qo3ts/image/upload/v1677271623/bgImages/3_erfxie.jpg",
+  "https://res.cloudinary.com/dqs5qo3ts/image/upload/v1677271623/bgImages/4_uwie7f.jpg",
+  "https://res.cloudinary.com/dqs5qo3ts/image/upload/v1677271624/bgImages/5_sjwdz3.jpg",
+  "https://res.cloudinary.com/dqs5qo3ts/image/upload/v1677271624/bgImages/6_wnwtzm.jpg",
+  "https://res.cloudinary.com/dqs5qo3ts/image/upload/v1677271623/bgImages/7_jsfsek.jpg",
+  "https://res.cloudinary.com/dqs5qo3ts/image/upload/v1677271624/bgImages/8_u8bvcn.jpg",
+  "https://res.cloudinary.com/dqs5qo3ts/image/upload/v1677271624/bgImages/9_rzglpl.jpg",
+  "https://res.cloudinary.com/dqs5qo3ts/image/upload/v1677271624/bgImages/10_hbfb4x.jpg",
 ];
+// const postBackgrounds = [
+//   "../../../images/postbackgrounds/1.jpg",
+//   "../../../images/postbackgrounds/2.jpg",
+//   "../../../images/postbackgrounds/3.jpg",
+//   "../../../images/postbackgrounds/4.jpg",
+//   "../../../images/postbackgrounds/5.jpg",
+//   "../../../images/postbackgrounds/6.jpg",
+//   "../../../images/postbackgrounds/7.jpg",
+//   "../../../images/postbackgrounds/8.jpg",
+//   "../../../images/postbackgrounds/9.jpg",
+// ];
 
 const EmojiPickerBackgrounds = ({ text, setText, user, type2, background, setBackground }) => {
   const [picker, setPicker] = useState(false);
