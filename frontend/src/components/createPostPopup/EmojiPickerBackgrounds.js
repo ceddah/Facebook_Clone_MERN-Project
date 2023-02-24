@@ -3,15 +3,15 @@ import EmojiPicker from "emoji-picker-react";
 import { useMediaQuery } from "react-responsive";
 
 const postBackgrounds = [
-  "../../../images/postbackgrounds/1.jpg",
-  "../../../images/postbackgrounds/2.jpg",
-  "../../../images/postbackgrounds/3.jpg",
-  "../../../images/postbackgrounds/4.jpg",
-  "../../../images/postbackgrounds/5.jpg",
-  "../../../images/postbackgrounds/6.jpg",
-  "../../../images/postbackgrounds/7.jpg",
-  "../../../images/postbackgrounds/8.jpg",
-  "../../../images/postbackgrounds/9.jpg",
+  "/images/postbackgrounds/1.jpg",
+  "/images/postbackgrounds/2.jpg",
+  "/images/postbackgrounds/3.jpg",
+  "/images/postbackgrounds/4.jpg",
+  "/images/postbackgrounds/5.jpg",
+  "/images/postbackgrounds/6.jpg",
+  "/images/postbackgrounds/7.jpg",
+  "/images/postbackgrounds/8.jpg",
+  "/images/postbackgrounds/9.jpg",
 ];
 
 const EmojiPickerBackgrounds = ({ text, setText, user, type2, background, setBackground }) => {

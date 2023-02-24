@@ -17,7 +17,7 @@ export const createPost = async (type, background, text, images, user, token) =>
         },
       }
     );
-    return "ok";
+    return data;
   } catch (error) {
     return error.response.data.message;
   }
