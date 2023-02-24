@@ -1,7 +1,7 @@
 import React from "react";
 import { useSelector } from "react-redux";
 import { Link } from "react-router-dom";
-import { acceptRequest, canceLRequest, deleteRequest } from "../../functions/user";
+import { acceptRequest, canceLRequest, deleteRequest, addFriend } from "../../functions/user";
 
 const Card = ({ user, type, getFriendsInfos }) => {
   const { token } = useSelector((state) => state.user);
@@ -19,6 +19,12 @@ const Card = ({ user, type, getFriendsInfos }) => {
   };
   const deleteRequestHandler = async (userId) => {
     const res = await deleteRequest(userId, token);
+    if (res === "ok") {
+      getFriendsInfos();
+    }
+  };
+  const addUserHandler = async (userId) => {
+    const res = await addFriend(userId, token);
     if (res === "ok") {
       getFriendsInfos();
     }
@@ -44,9 +50,11 @@ const Card = ({ user, type, getFriendsInfos }) => {
             Delete
           </button>
         </>
-      ) : (
-        ""
-      )}
+      ) : type === "suggestions" ? (
+        <button className="blue_btn" onClick={() => addUserHandler(user._id)}>
+          Add Friend
+        </button>
+      ) : null}
     </div>
   );
 };

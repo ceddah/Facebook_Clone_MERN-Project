@@ -113,3 +113,9 @@
     padding: 10px;
   }
 }
+
+.avatar-skeleton {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+}

@@ -1,22 +1,10 @@
 import axios from "axios";
-import React, { useEffect, useState } from "react";
+import React, { useState } from "react";
 import Bio from "./Bio";
 import EditDetails from "./EditDetails";
 import "./style.css";
 
 const Intro = ({ details, visitor, user, rehydrateDetails }) => {
-  const initial = {
-    bio: details?.bio ? details.bio : "",
-    otherName: details?.otherName ? details.otherName : "",
-    job: details?.job ? details.job : "",
-    workplace: details?.workplace ? details.workplace : "",
-    highSchool: details?.highSchool ? details.highSchool : "",
-    college: details?.college ? details.college : "",
-    currentCity: details?.currentCity ? details.currentCity : "",
-    hometown: details?.hometown ? details.hometown : "",
-    relationship: details?.relationship ? details.relationship : "",
-    instagram: details?.instagram ? details.instagram : "",
-  };
   const [infos, setInfos] = useState({
     bio: details?.bio ? details.bio : "",
     otherName: details?.otherName ? details.otherName : "",
@@ -33,7 +21,6 @@ const Intro = ({ details, visitor, user, rehydrateDetails }) => {
   const [showEditDetails, setShowEditDetails] = useState(false);
   const [charactersRemaining, setCharactersRemaining] = useState(100 - infos?.bio.length || 100);
   const handleBioChange = (e) => {
-    // setInfos((prev) => ({ ...prev, [e.target.name]: e.target.value }));
     setInfos({ ...details, [e.target.name]: e.target.value });
     setCharactersRemaining(100 - Number(e.target.value.length));
   };

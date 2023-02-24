@@ -1,4 +1,4 @@
-import React, { useEffect, useReducer, useState } from "react";
+import React, { useEffect, useReducer } from "react";
 import { useSelector } from "react-redux";
 import { Link, useParams } from "react-router-dom";
 import Header from "../../components/header";
@@ -19,7 +19,7 @@ const Friends = () => {
     dispatch({
       type: "FRIENDS_REQUEST",
     });
-    const response = await getFriendsPageInfos(user.token);
+    const response = await getFriendsPageInfos(null, user.token);
     if (response.status === "ok") {
       dispatch({
         type: "FRIENDS_SUCCESS",
@@ -32,6 +32,7 @@ const Friends = () => {
       });
     }
   };
+
   useEffect(() => {
     getFriendsInfos();
   }, []);
@@ -80,7 +81,10 @@ const Friends = () => {
                 <i className="right_icon"></i>
               </div>
             </Link>
-            <div className="mmenu_item hover3">
+            <Link
+              to="/friends/suggestions"
+              className={`mmenu_item hover3 ${type === "suggestions" && "active_friends"}`}
+            >
               <div className="small_circle">
                 <i className="friends_suggestions_icon"></i>
               </div>
@@ -88,7 +92,7 @@ const Friends = () => {
               <div className="rArrow">
                 <i className="right_icon"></i>
               </div>
-            </div>
+            </Link>
             <Link
               to="/friends/all"
               className={`mmenu_item hover3 ${type === "all" && "active_friends"}`}
@@ -185,6 +189,29 @@ const Friends = () => {
                       user={user}
                       key={user._id}
                       type="friends"
+                      getFriendsInfos={getFriendsInfos}
+                    />
+                  ))}
+              </div>
+            </div>
+          )}
+          {(!type || type === "suggestions") && (
+            <div className="friends_right_wrap">
+              <div className="friends_left_header">
+                <h3>Suggestions</h3>
+                {!type && (
+                  <Link to="/friends/suggestions" className="see_link hover3">
+                    See All
+                  </Link>
+                )}
+              </div>
+              <div className="flex_wrap">
+                {data.suggestedUsers &&
+                  data.suggestedUsers.map((user) => (
+                    <Card
+                      user={user}
+                      key={user._id}
+                      type="suggestions"
                       getFriendsInfos={getFriendsInfos}
                     />
                   ))}

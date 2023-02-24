@@ -3,8 +3,9 @@ import { Dots, NewRoom, Search } from "../../../svg";
 import Contact from "./Contact";
 import "./style.css";
 
-const RightHome = ({ user }) => {
+const RightHome = ({ contacts }) => {
   const color = "#65676b";
+
   return (
     <div className="right_home">
       <div className="heading">Sponsored</div>
@@ -25,7 +26,7 @@ const RightHome = ({ user }) => {
           </div>
         </div>
         <div className="contacts_list">
-          <Contact user={user} />
+          {contacts.length ? contacts.map((user) => <Contact key={user._id} user={user} />) : null}
         </div>
       </div>
     </div>

@@ -71,6 +71,7 @@ function App() {
                 posts={posts}
                 getAllPosts={getAllPosts}
                 setCreatePostVisible={setCreatePostVisible}
+                isLoading={loading}
               />
             }
           />

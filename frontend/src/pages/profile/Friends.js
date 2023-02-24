@@ -6,7 +6,9 @@ const Friends = ({ friends }) => {
     <div className="profile_card">
       <div className="profile_card_heahder">
         Friends
-        <div className="profile_header_link">See all friends</div>
+        <Link to="/friends/all" className="profile_header_link">
+          See all friends
+        </Link>
       </div>
       <div className="profile_card_count">
         {friends?.length === 0
