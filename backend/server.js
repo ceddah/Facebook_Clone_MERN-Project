@@ -4,7 +4,9 @@ const mongoose = require("mongoose");
 const fileUpload = require("express-fileupload");
 const { readdirSync } = require("fs");
 const path = require("path");
-require("dotenv").config({});
+if (process.env.NODE_ENV !== "PRODUCTION") {
+  require("dotenv").config({});
+}
 const app = express();
 const PORT = process.env.PORT || 4040;
 
