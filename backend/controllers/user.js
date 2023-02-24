@@ -619,6 +619,7 @@ exports.removeFromSearch = async (req, res) => {
 };
 
 exports.getFriendsPageInfos = async (req, res) => {
+  const type = req.query.type || null;
   try {
     const user = await User.findById(req.user.id)
       .select("friends requests")
@@ -628,10 +629,34 @@ exports.getFriendsPageInfos = async (req, res) => {
     const sentRequests = await User.find({ requests: mongoose.Types.ObjectId(req.user.id) }).select(
       "first_name last_name picture username"
     );
+    const filteredUsers = await User.find({
+      requests: {
+        $nin: req.user.id,
+      },
+      followers: {
+        $nin: req.user.id,
+      },
+      friends: {
+        $nin: req.user.id,
+      },
+      _id: {
+        $nin: req.user.id,
+      },
+    });
+    const currentUserRequests = await User.findById(req.user.id).select("requests");
+    const suggestedUsers = filteredUsers.filter(
+      (user) => !currentUserRequests.requests.includes(user._id)
+    );
+    if (type === "contacts") {
+      return res.status(200).json({
+        contacts: user.friends,
+      });
+    }
     res.status(200).json({
       friends: user.friends,
       requests: user.requests,
       sentRequests,
+      suggestedUsers,
     });
   } catch (error) {
     res.status(500).json({ message: error.message });
