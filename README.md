@@ -14,6 +14,6 @@ Key Features:
 - Ability to change Profile photo, Cover photo and edit personal details like occupation, birth place, bio and etc...
 - Adding/Removing/Following (and etc..) Friends
 - Dark Mode
-- Skeleton Loader (only for profile for now)
+- Skeleton Loader (only on profile for now)
 
 #### Preview: [Live Demo:]()
